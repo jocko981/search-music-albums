@@ -1,13 +1,55 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+/* variables */
+:root {
+  --white-color: #fff;
+  --blue-color-main: #2f58a5;
+  --black-color-main: #222;
+  --grey-color: #555;
+  --grey-color-1: #ccc;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 300;
+  background: var(--blue-color-main);
+  color: var(--black-color-main);
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+input,
+textarea {
+  background: var(--white-color);
+  border: 3px solid var(--grey-color);
+  border-radius: 5px;
+  color: var(--black-color-main);
+  padding: 8px;
+  font-size: 1em;
+  width: 300px;
+}
+
+input:focus {
+  outline: 1px solid var(--white-color);
 }

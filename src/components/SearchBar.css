@@ -1,0 +1,12 @@
+.search-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 100%;
+}
+
+.search-bar input:placeholder-shown {
+  font-style: italic;
+}
