@@ -14,6 +14,13 @@ export default function SearchBar() {
     searchInputRef.current.blur()
   }
 
+  function handleKeyUp(e) {
+    //key code for enter
+    if (e.keyCode === 13) {
+      searchInputRef.current.blur()
+    }
+  }
+
   useEffect(() => {
     const controller = new AbortController()
     const fetchSongs = async () => {
@@ -63,6 +70,7 @@ export default function SearchBar() {
         placeholder="Search Band"
         onChange={(e) => setTerm(e.target.value)}
         ref={searchInputRef}
+        onKeyUp={handleKeyUp}
       />
     </form>
   )
