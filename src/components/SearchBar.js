@@ -8,50 +8,55 @@ export default function SearchBar() {
   const [term, setTerm] = useState("")
   const { dispatch } = useSongsContext()
   const searchInputRef = useRef(null)
-  const controller = new AbortController()
 
-  const handleSearch = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    fetchSongs(term)
-  }
-
-  const fetchSongs = async (term) => {
     searchInputRef.current.blur()
-    const url = "https://itunes.apple.com/search?term=" + term
-    dispatch({ type: "IS_PENDING" })
-
-    try {
-      const res = await fetch(url, {
-        signal: controller.signal
-      })
-      if (!res.ok) {
-        dispatch({ type: "ERROR", payload: res.statusText })
-      }
-      const data = await res.json()
-
-      let uniqueAlbums = data.results.map(item => item.collectionName)
-      uniqueAlbums = Array.from(new Set(uniqueAlbums)).sort().slice(0, 5)
-
-      dispatch({ type: "FETCH_SONGS", payload: uniqueAlbums })
-    } catch (err) {
-      if (err.name === "AbortError") {
-        console.log("the fetch was aborted");
-      } else {
-        dispatch({ type: "ERROR", payload: "Could not fetch the data." })
-      }
-    }
   }
 
   useEffect(() => {
+    const controller = new AbortController()
+    const fetchSongs = async () => {
+      const url = "https://itunes.apple.com/search?term=" + term
+      dispatch({ type: "IS_PENDING" })
+
+      try {
+        const res = await fetch(url, {
+          signal: controller.signal
+        })
+        if (!res.ok) {
+          dispatch({ type: "ERROR", payload: res.statusText })
+        }
+        const data = await res.json()
+
+        let uniqueAlbums = data.results.map(item => item.collectionName)
+        uniqueAlbums = Array.from(new Set(uniqueAlbums)).sort().slice(0, 5)
+
+        dispatch({ type: "FETCH_SONGS", payload: uniqueAlbums })
+      } catch (err) {
+        if (err.name === "AbortError") {
+          console.log("the fetch was aborted");
+        } else {
+          dispatch({ type: "ERROR", payload: "Could not fetch the data." })
+        }
+      }
+    }
+
+    const timeout = setTimeout(() => {
+      if (term) {
+        fetchSongs()
+      }
+    }, 600)
 
     return () => {
       controller.abort()
+      clearTimeout(timeout)
     }
   }, [term])
 
 
   return (
-    <form className="search-bar" onSubmit={handleSearch}>
+    <form className="search-bar" onSubmit={handleSubmit}>
       <input
         type="text"
         required
