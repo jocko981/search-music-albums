@@ -8,7 +8,6 @@ export default function List() {
 
   useEffect(() => {
     const rearangeItems = () => {
-
       setDefaultItems((prevState) => {
         const defaultArr = [...prevState]
 
@@ -24,9 +23,6 @@ export default function List() {
         } else {
           defaultArr.push(defaultArr.shift())
         }
-
-        // console.log("arr2", songsArr);
-        // console.log("arr", defaultArr);
 
         return defaultArr
       })
@@ -48,6 +44,7 @@ export default function List() {
           <li key={Math.random()}>{item}</li>
         ))}
       </ul>
+      {isPending && <p>Loading...</p>}
     </div>
   )
 }
